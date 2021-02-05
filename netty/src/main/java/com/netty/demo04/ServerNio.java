@@ -80,8 +80,9 @@ public class ServerNio {
             ByteBuffer byteBuffer =(ByteBuffer) key.attachment();
             socketChannel.read(byteBuffer);
             String message = new String(byteBuffer.array());
+            byteBuffer.clear();
             SocketAddress remoteAddress = socketChannel.getRemoteAddress();
-            System.out.println("客户端-"+ remoteAddress +":"+ message);
+            System.out.println("客户端-"+ remoteAddress +"说:"+ message);
             sendMessage(selector,message,socketChannel);
 
         }catch (IOException e){
@@ -100,7 +101,7 @@ public class ServerNio {
 
 
     public void sendMessage(Selector selector,String message,SocketChannel socketChannel) throws IOException {
-        Set<SelectionKey> selectionKeys = selector.selectedKeys();
+        Set<SelectionKey> selectionKeys = selector.keys();
         Iterator<SelectionKey> iterator = selectionKeys.iterator();
         while (iterator.hasNext()){
             SelectionKey selectionKey = iterator.next();
