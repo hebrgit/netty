@@ -40,7 +40,6 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
             }
         });
 
-        System.out.println("111");
     }
 
     @Override
