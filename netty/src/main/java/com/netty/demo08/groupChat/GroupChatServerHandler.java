@@ -25,28 +25,31 @@ public class GroupChatServerHandler extends SimpleChannelInboundHandler<String> 
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        super.channelActive(ctx);
+        Channel channel = ctx.channel();
+        System.out.println("【客户端】-"+channel.remoteAddress()+"上线了~");
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        super.channelInactive(ctx);
+        Channel channel = ctx.channel();
+        System.out.println("【客户端】-"+channel.remoteAddress()+"离线了~");
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        super.exceptionCaught(ctx, cause);
+        ctx.close();
     }
 
     /**
-     * 客户端链接服务器时调用该方法
+     * 客户端链接服务器时调用该方法,一旦连接 第一个调用该方法
+     *
      * @param ctx
      * @throws Exception
      */
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         Channel channel = ctx.channel();
-        channelGroup.writeAndFlush("【客户端】-"+channel.remoteAddress()+"上线了");
+        channelGroup.writeAndFlush("【客户端】-"+channel.remoteAddress()+"加入聊天");
         channelGroup.add(channel);
     }
 

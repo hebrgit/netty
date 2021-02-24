@@ -55,8 +55,8 @@ public class GroupChatClient {
                     });
             ChannelFuture f = bootstrap.connect(host, port).sync();
             Channel channel = f.channel();
+            System.out.println("--------"+channel.localAddress());
             Scanner scanner = new Scanner(System.in);
-
             while (scanner.hasNextLine()){
                 String s = scanner.nextLine();
                 channel.writeAndFlush(s+"\r\n");
