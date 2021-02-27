@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option optimize_for = SPEED;
+option java_outer_classname = "DataTypeInfo";
+
+
+message MyMessage{
+
+    //定义枚举类型
+    enum DataType{
+        studentType = 0; //在proto3 版本 要求编号从0开始
+        workerType = 1;
+    }
+
+    //用data_type 来标识传的是那个枚举类型
+    DataType data_type = 1;
+
+    //每次枚举只能出现其中一个，节省空间
+    oneof  dataBody{
+        Student student = 2;
+        Worker worker = 3;
+    }
+
+}
+
+
+message Student{
+    int32 id = 1;
+    string name = 2;
+}
+
+message Worker{
+    string age = 1;
+    string name = 2;
+}
